@@ -5,12 +5,10 @@ class FormUI {
         this._form = document.forms['locationControls'];
         this.origin = document.getElementById('autocomplete-origin');
         this.destination = document.getElementById('autocomplete-destination');
-        this.depart = document.getElementById('datepicker-depart');
-        this.return = document.getElementById('datepicker-return');
+        this.depart = datePickerInstance( document.getElementById('datepicker-depart'));
+        this.return = datePickerInstance(document.getElementById('datepicker-return'));
         this.originAutocomplete = autocompleteInstance(this.origin);
         this.destinationAutocomplete = autocompleteInstance(this.destination);
-        this.departDatePicker = datePickerInstance(this.depart);
-        this.returnDatePicker = datePickerInstance(this.return);
     }
 
     get form() {
@@ -26,11 +24,11 @@ class FormUI {
     }
 
     get departDataValue() {
-        return this.departDatePicker.toString();
+        return this.depart.toString();
     }
 
     get returnDataValue() {
-        return this.returnDatePicker.toString();
+        return this.return.toString();
     }
 
     setAutocompleteData(data) {

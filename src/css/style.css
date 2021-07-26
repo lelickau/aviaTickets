@@ -11,6 +11,9 @@ body {
 .jic {
     justify-items: center;
 }
+.red-c {
+  color: rgb(236, 33, 74);
+}
 
 .ml-auto {
     margin-left: auto;
@@ -96,3 +99,15 @@ body {
     font-weight: bold;
     font-size: 18px;
   }
+
+  .favorite {
+    margin-left: 30px;
+    cursor: pointer;
+  }
+  i.large {
+    font-size: 2rem;
+}
+
+.ticket-airline{
+  justify-content: space-between;
+}

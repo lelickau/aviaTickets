@@ -1,8 +1,11 @@
 import currencyUI from './currency';
+import favoriteUI from './favorite';
 class TicketsUI {
     constructor(currency) {
         this.container = document.querySelector('.tickets-sections .row');
         this.getCurrencySymbol = currency.getCurrencySymbol.bind(currency);
+        this.foundTickets = {};
+        this.favorite = [];
     }
 
     renderTickets(tickets) {
@@ -15,12 +18,30 @@ class TicketsUI {
         let fragment = '';
         let currency = this.getCurrencySymbol();
 
-        tickets.forEach(ticket => {
-            const template = TicketsUI.ticketTemplate(ticket, currency);
+        tickets.forEach((ticket, index) => {
+            this.foundTickets[index] = ticket;
+            const template = TicketsUI.ticketTemplate(ticket, index, currency);
             fragment += template;
         });
+        //console.log(this.foundTickets);
 
         this.container.insertAdjacentHTML('afterbegin', fragment);
+
+        document.querySelectorAll('.ticket').forEach((item, index) => {
+            //console.log(item);
+            
+            item.addEventListener('click', (e) => {
+                const target = e.target;
+                const attrElem = item.dataset.favorit;
+                console.log(attrElem);
+                if (target.classList.contains('add-favorite')) {
+                    const like = document.querySelectorAll('.add-favorite')[index];
+                    like.classList.add('red-c');
+                    favoriteUI.renderFavorite(this.foundTickets[index], attrElem);
+                }
+                
+            })
+        })
     }
 
     clearContainer() {
@@ -40,14 +61,16 @@ class TicketsUI {
         `
     }
 
-    static ticketTemplate(ticket, currency) {
+    static ticketTemplate(ticket, index, currency) {
         const {airline_logo, airline_name, origin_name, destination_name, departure_at, price, transfers, flight_number} = ticket;
+        //console.log(ticket);
         return `
-        <div class="col s12 m6">
+        <div class="col s12 m6 ticket" data-favorit="${index}">
             <div class="card ticket-card">
-            <div class="ticket-airline d-flex align-items-center">
+            <div class="ticket-airline d-flex aic jcsb">
                 <img src="${airline_logo}" class="ticket-airline-img"/>
                 <span class="ticket-airline-name">${airline_name}</span>
+                <i class="small material-icons add-favorite">favorite_border</i>
             </div>
             <div class="ticket-destination d-flex align-items-center">
                 <div class="d-flex align-items-center mr-auto">
@@ -72,20 +95,6 @@ class TicketsUI {
         `
     }
 }
-
-/* airline: "LO"
-airline_logo: "http://pics.avs.io/200/200/LO.png"
-airline_name: "LOT Polish Airlines"
-departure_at: "19.Jul.2021 07:30"
-destination: "LAX"
-destination_name: "Лос-Анджелес"
-expires_at: "2021-07-20T14:44:44Z"
-flight_number: 678
-origin: "MOW"
-origin_name: "Москва"
-price: 556
-return_at: "01.Aug.2021 08:25"
-transfers: 1 */
 
 const ticketsUI = new TicketsUI(currencyUI);
 

@@ -22,7 +22,7 @@ class Locations {
         this.cities = this.serializeCities(cities);
         this.shortCitiesList = this.createShortCitiesList(this.cities);
         this.airlines = this.serializeAirlines(airlines);
-        console.log(this.airlines);
+        
         return response;
     }
 
@@ -35,7 +35,7 @@ class Locations {
     }
 
     getAirlineLogoByKey(code) {
-        return this.airlines[code] ? this.airlines[code].logo : '';
+        return this.airlines[code] ? this.airlines[code].logo : null;
     }
 
     getCityCodeByKey(key) {
@@ -46,8 +46,6 @@ class Locations {
     }
 
     createShortCitiesList(cities) {
-        //{ 'City, country' : null }
-        // Object.entries => [key, value]
         return Object.entries(cities).reduce((acc, [, city]) => {
             acc[city.full_name] = null;
             return acc;
@@ -55,7 +53,6 @@ class Locations {
     }
 
     serializeCountries(countries) {
-        //{'Country code' : { ... } }
         return countries.reduce((acc, country) => {
             acc[country.code] = country;
             return acc;
@@ -65,7 +62,7 @@ class Locations {
     serializeCities(cities) {
         return cities.reduce((acc, city) => {
             const country_name = this.countries[city.country_code].name;
-            const city_name = city.name || city.name_translations.en;
+            city.name || city.name_translations.en;
             const full_name = `${city.name},${country_name}`;
             acc[city.code] = {
                 ...city,
@@ -84,10 +81,6 @@ class Locations {
             return acc;
 
         }, {})
-    }
-
-    getCountryNameByCode(code) {
-        return this.countries[code].name;
     }
 
     async fetchTickets(params) {
@@ -114,31 +107,3 @@ const locations = new Locations(api, {formatDate});
 
 export default locations;
 
-/* {
-    "success": true,
-    "data": {
-        "2021-07-19": {
-            "origin": "MOW",
-            "destination": "LAX",
-            "price": 556,
-            "airline": "LO",
-            "flight_number": 678,
-            "departure_at": "2021-07-19T20:30:00+03:00",
-            "return_at": "2021-07-31T23:25:00-07:00",
-            "transfers": 1,
-            "expires_at": "2021-07-20T13:01:40Z"
-        },
-        "2021-07-20": {
-            "origin": "MOW",
-            "destination": "LAX",
-            "price": 569,
-            "airline": "SU",
-            "flight_number": 2550,
-            "departure_at": "2021-07-20T09:10:00+03:00",
-            "return_at": "2021-07-27T13:55:00-07:00",
-            "transfers": 1,
-            "expires_at": "2021-07-20T13:01:40Z"
-        }
-    },
-    "currency": "USD"
-} */

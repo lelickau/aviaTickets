@@ -5,6 +5,7 @@ import formUI from './views/form';
 import currencyUI from './views/currency';
 import ticketsUI from './views/tickets';
 
+
 document.addEventListener('DOMContentLoaded', () => {
     initApp();
 
