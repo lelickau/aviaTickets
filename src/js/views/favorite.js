@@ -13,36 +13,45 @@ class FavoritUI {
             fragment += template;
         });
         this.showFavorite.insertAdjacentHTML('afterbegin', fragment);
+
         //delete ticket
-        document.querySelectorAll('.favorite-item').forEach((item, index) => {
+        document.querySelectorAll('.favorite-item').forEach((item) => {
             item.addEventListener('click', (e) => {
                 const attrElem = item.dataset.elemfavorite;
                 const target = e.target;
-                this.deleteItemFavorite(attrElem, index, target);
+                if(target.classList.contains('delete-favorite')){
+                    this.deleteItemFavorite(attrElem);
+                }
             });
-        })
+        });
     }
     
-    deleteItemFavorite(attrElem, index, target) {
-        if(target.classList.contains('delete-favorite')) {
-            this.favorite.splice(index, 1);
-            this.clearContainer();
-            this.renderItemsFavorites();
-            document.querySelectorAll('.add-favorite')[+attrElem].classList.remove('red-c');
-        }
-        console.log(this.favorite);     
+    deleteItemFavorite(attrElem) {
+
+        this.favorite.find((item, index) => {
+            if (item.attrFavorite === attrElem) {
+                this.favorite.splice(index, 1);
+                this.clearContainer();
+                this.renderItemsFavorites();
+                const deleteFavorite = document.querySelectorAll('.add-favorite')[+attrElem];
+                deleteFavorite.classList.remove('red-c');
+                deleteFavorite.textContent = 'favorite_border';
+            }
+        });
     }
 
-    renderFavorite(favorite, attrElem) {
+    renderFavorite(favorite, attrElem, currency) {
         this.clearContainer();
         favorite.attrFavorite = attrElem;
+        favorite.currency = currency;
         this.favorite.push(favorite);
-        console.log(this.favorite);
+
         if (!this.favorite.length) {
             this.showEmptyMsg();
             return;
         }
         this.renderItemsFavorites();
+        
     }
 
     clearContainer() {
@@ -63,7 +72,7 @@ class FavoritUI {
     }
 
     static favoriteTemplate(item) {
-        const {airline_logo, airline_name, origin_name, destination_name, departure_at, price, transfers, flight_number, attrFavorite} = item;
+        const {airline_logo, airline_name, origin_name, destination_name, departure_at, price, transfers, flight_number, attrFavorite, currency} = item;
         return `
         <div class="col s12 m6 d-none favorite-item" data-elemfavorite="${attrFavorite}">
             <div class="card ticket-card">
@@ -84,7 +93,7 @@ class FavoritUI {
             </div>
             <div class="ticket-time-price d-flex align-items-center">
                 <span class="ticket-time-departure">${departure_at}</span>
-                <span class="ticket-price ml-auto">${price}</span>
+                <span class="ticket-price ml-auto">${currency}${price}</span>
             </div>
             <div class="ticket-additional-info">
                 <span class="ticket-transfers">Пересадок: ${transfers}</span>

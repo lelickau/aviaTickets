@@ -23,21 +23,29 @@ class TicketsUI {
             const template = TicketsUI.ticketTemplate(ticket, index, currency);
             fragment += template;
         });
-        //console.log(this.foundTickets);
 
         this.container.insertAdjacentHTML('afterbegin', fragment);
 
         document.querySelectorAll('.ticket').forEach((item, index) => {
-            //console.log(item);
+
+            //if (item.classList.contains(''))
             
             item.addEventListener('click', (e) => {
                 const target = e.target;
                 const attrElem = item.dataset.favorit;
-                console.log(attrElem);
+                
                 if (target.classList.contains('add-favorite')) {
                     const like = document.querySelectorAll('.add-favorite')[index];
-                    like.classList.add('red-c');
-                    favoriteUI.renderFavorite(this.foundTickets[index], attrElem);
+
+                    if (item.querySelector('.red-c')) {
+                        like.classList.remove('red-c');
+                        favoriteUI.deleteItemFavorite(attrElem, null)
+                    } else {
+                        like.textContent = 'favorite';
+                        like.classList.add('red-c');
+                        favoriteUI.renderFavorite(this.foundTickets[index], attrElem, currency);
+                    }
+                    
                 }
                 
             })

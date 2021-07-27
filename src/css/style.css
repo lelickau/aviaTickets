@@ -111,3 +111,7 @@ body {
 .ticket-airline{
   justify-content: space-between;
 }
+
+.delete-favorite, .add-favorite {
+  cursor: pointer;
+}
