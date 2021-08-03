@@ -2,7 +2,7 @@ import currencyUI from './currency';
 import favoriteUI from './favorite';
 class TicketsUI {
     constructor(currency) {
-        this.container = document.querySelector('.tickets-sections .row');
+        this.container = document.querySelector('.tickets__section .tickets__box');
         this.getCurrencySymbol = currency.getCurrencySymbol.bind(currency);
         this.foundTickets = {};
         this.favorite = [];
@@ -34,15 +34,15 @@ class TicketsUI {
                 const target = e.target;
                 const attrElem = item.dataset.favorit;
                 
-                if (target.classList.contains('add-favorite')) {
-                    const like = document.querySelectorAll('.add-favorite')[index];
+                if (target.classList.contains('favorite__add')) {
+                    const like = document.querySelectorAll('.favorite__add')[index];
 
-                    if (item.querySelector('.red-c')) {
-                        like.classList.remove('red-c');
+                    if (item.querySelector('.favorite__icon--active')) {
+                        like.classList.remove('favorite__icon--active');
                         favoriteUI.deleteItemFavorite(attrElem, null)
                     } else {
                         like.textContent = 'favorite';
-                        like.classList.add('red-c');
+                        like.classList.add('favorite__icon--active');
                         favoriteUI.renderFavorite(this.foundTickets[index], attrElem, currency);
                     }
                     
@@ -63,40 +63,40 @@ class TicketsUI {
 
     static emptyMsgTemplate() {
         return `
-        <div class="tickets-empty-res-msg">
+        <div class="tickets__empty-res-msg">
             По вашему запросу билетов не найдено.
         </div>        
         `
     }
 
     static ticketTemplate(ticket, index, currency) {
-        const {airline_logo, airline_name, origin_name, destination_name, departure_at, price, transfers, flight_number} = ticket;
-        //console.log(ticket);
+        const {airline_logo, airline_name, origin_name, destination_name, departure_at, return_at, price, transfers, flight_number} = ticket;
         return `
-        <div class="col s12 m6 ticket" data-favorit="${index}">
-            <div class="card ticket-card">
-            <div class="ticket-airline d-flex aic jcsb">
-                <img src="${airline_logo}" class="ticket-airline-img"/>
-                <span class="ticket-airline-name">${airline_name}</span>
-                <i class="small material-icons add-favorite">favorite_border</i>
+        <div class="ticket" data-favorit="${index}">
+            <div class="ticket__card">
+            <div class="ticket__airline">
+                <img src="${airline_logo}" class="ticket__airline-img"/>
+                <span class="ticket__airline-name">${airline_name}</span>
+                <i class="small material-icons favorite__add">favorite_border</i>
             </div>
-            <div class="ticket-destination d-flex align-items-center">
-                <div class="d-flex align-items-center mr-auto">
-                    <span class="ticket-city">${origin_name} </span>
+            <div class="ticket__destination">
+                <div class="ticket__destination-from">
                     <i class="medium material-icons">flight_takeoff</i>
+                    <span class="ticket__destination-city">${origin_name} </span>
                 </div>
-                <div class="d-flex align-items-center">
+                <div class="ticket__destination-in">
                     <i class="medium material-icons">flight_land</i>
-                    <span class="ticket-city">${destination_name}</span>
+                    <span class="ticket__destination-city">${destination_name}</span>
                 </div>
             </div>
-            <div class="ticket-time-price d-flex align-items-center">
-                <span class="ticket-time-departure">${departure_at}</span>
-                <span class="ticket-price ml-auto">${currency}${price}</span>
+            <div class="ticket__info">
+                <span class="ticket__info-departure">${departure_at}</span>
+                <span class="ticket__info-departure">${return_at}</span>
+                <span class="ticket__info-price">${currency}${price}</span>
             </div>
-            <div class="ticket-additional-info">
-                <span class="ticket-transfers">Пересадок: ${transfers}</span>
-                <span class="ticket-flight-number">Номер рейса: ${flight_number}</span>
+            <div class="ticket__info">
+                <span class="ticket__info-transfers">Пересадок: ${transfers}</span>
+                <span class="ticket__info-number">Номер рейса: ${flight_number}</span>
             </div>
             </div>
         </div>
