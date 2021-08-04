@@ -24,7 +24,7 @@
         <nav class="nav">
           <ul class="nav__list" id="nav-mobile">
             <li class="nav__item">
-              <div class="input-field currency-select">
+              <div class="input-field currency-select" data-test="currencySelect">
                 <select id='currency'>
                   <option value="USD">$ ES Dollar</option>
                   <option value="EUR">€ Euro</option>
@@ -45,23 +45,23 @@
       <div class="main__box">
         <div class="show__favorite"></div>
         <div class="card form__box">
-          <form name="locationControls">
+          <form name="locationControls" data-test-form="testForm">
             <div class="card__content">
               <span class="card__title">Поиск дешёвых авиабилетов</span>
               <div class="input-field">
-                <input type="text" id="autocomplete-origin" class="autocomplete">
+                <input type="text" id="autocomplete-origin" class="autocomplete" data-test-input="autocompleteOrigin">
                 <label for="autocomplete-origin">Откуда</label>
               </div>
               <div class="input-field">
-                <input type="text" id="autocomplete-destination" class="autocomplete">
+                <input type="text" id="autocomplete-destination" class="autocomplete" data-test-input="autocompleteDestination">
                 <label for="autocomplete-destination">Куда</label>
               </div>
-              <div class="input-field">
-                <input type="text" class="datepicker" id="datepicker-depart">
+              <div class="input-field" data-test-wrap="datepickerDepartWrap">
+                <input type="text" class="datepicker" id="datepicker-depart" data-test-input="datepickerDepart">
                 <label for="datepicker-depart">Когда</label>
               </div>
-              <div class="input-field">
-                <input type="text" class="datepicker" id="datepicker-return">
+              <div class="input-field" data-test-wrap="datepickerReturnWrap">
+                <input type="text" class="datepicker" id="datepicker-return" data-test-input="datepickerReturn">
                 <label for="datepicker-return">Обратно</label>
               </div>
             </div>
@@ -76,38 +76,7 @@
           </form>
         </div>
         <div class="tickets__section">
-            <div class="tickets__box">
-
-              <div class="ticket" data-favorit="0">
-                <div class="ticket__card">
-                  <div class="ticket__airline">
-                    <img src="http://pics.avs.io/200/200/KL.png" class="ticket__airline-img">
-                    <span class="ticket__airline-name">KLM</span>
-                    <i class="small material-icons favorite__add">favorite_border</i>
-                  </div>
-                  <div class="ticket__destination">
-                    <div class="ticket__destination-from">
-                      <i class="medium material-icons">flight_takeoff</i>
-                      <span class="ticket__destination-city">Москва</span>
-                    </div>
-                    <div class="ticket__destination-in">
-                      <i class="medium material-icons">flight_land</i>
-                      <span class="ticket__destination-city">Лос-Анджелес</span>
-                    </div>
-                  </div>
-                  <div class="ticket__info">
-                    <span class="ticket__info-departure">03.Aug.2021 04:00</span>
-                    <span class="ticket__info-price">$584</span>
-                  </div>
-                  <div class="ticket__info">
-                    <span class="ticket__info-transfers">Пересадок: 1</span>
-                    <span class="ticket__info-number">Номер рейса: 904</span>
-                  </div>
-                </div>
-              </div>
-
-
-            </div>
+            <div class="tickets__box"></div>
         </div>
       </div>
     </div>
